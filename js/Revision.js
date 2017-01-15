@@ -3,7 +3,7 @@ var app = angular.module("myApp", []);
 //controller for menu items on home page
 app.controller("menuCtrl", function($scope, $http) {
     //initialising the subject list
-    $http.get("/subjectList")
+    $http.get("https://revi-c-v1.herokuapp.com/subjectList")
 	.then(function(response) {
 	    console.log(response.data.subjList);
         $scope.subjectList = response.data.subjList;
@@ -37,7 +37,7 @@ app.controller("menuCtrl", function($scope, $http) {
         if(activity.activityType == "QUIZ"){
         }
         else if(activity.activityType == "VIDEO"){
-            var vidHttpString = "/vidResource?resourceID=" + activity.activityName;
+            var vidHttpString = "https://revi-c-v1.herokuapp.com/vidResource?resourceID=" + activity.activityName;
             $http.get(vidHttpString)
             .then(function(response) {
                 $('#activityContent').empty();
@@ -48,7 +48,7 @@ app.controller("menuCtrl", function($scope, $http) {
 
         }
         else if(activity.activityType == "PASTPAPER"){
-            var ppqHttpString = "/ppqResource?resourceID=" + activity.activityName;
+            var ppqHttpString = "https://revi-c-v1.herokuapp.com/ppqResource?resourceID=" + activity.activityName;
             $http.get(ppqHttpString)
             .then(function(response) {
                 $('#activityContent').empty();
@@ -68,7 +68,7 @@ app.controller("menuCtrl", function($scope, $http) {
             case "QUIZ":
                 break;
             case "VIDEO":
-                var vidHttpString = "/vidResult?resourceID=" + $scope.currentActivity.activityName + "&answer=" + answer;
+                var vidHttpString = "https://revi-c-v1.herokuapp.com/vidResult?resourceID=" + $scope.currentActivity.activityName + "&answer=" + answer;
                 $http.get(vidHttpString)
                 .then(function(response) {
                     console.log("Feedback for " + response.data.resID + " " + response.data.feedback);
@@ -76,7 +76,7 @@ app.controller("menuCtrl", function($scope, $http) {
                 });
                 break;
             case "PASTPAPER":
-                var ppqHttpString = "/ppqResult?resourceID=" + $scope.currentActivity.activityName + "&answer=" + answer;
+                var ppqHttpString = "https://revi-c-v1.herokuapp.com/ppqResult?resourceID=" + $scope.currentActivity.activityName + "&answer=" + answer;
                 $http.get(ppqHttpString)
                 .then(function(response) {
                     console.log("Feedback for " + response.data.resID + " " + response.data.feedback);
