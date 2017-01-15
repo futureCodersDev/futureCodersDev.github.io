@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Revi-C Revision App</title>
+</head>
+<body>
+<div width="100%" data-ng-app="myApp" data-ng-controller="menuCtrl">
+    <div id="menu">
+    <p>Your revision subjects:</p>
+        <ul data-ng-repeat="subject in subjectList" id="main">
+            <button data-ng-disabled = "hasTopics(subject)" data-ng-click = "expand = !expand">
+                <span class="subjMenuItem">{{subject.subjectName}}</span>
+            </button>
+            <ul data-ng-repeat="topic in subject.topics" data-ng-show="expand" data-ng-click = "expandSub = !expandSub">
+                <button data-ng-disabled ="hasSubTopics(topic)">
+                    <span class="topicMenuItem">{{topic.topicName}}</span>
+                </button>
+                <ul data-ng-repeat="subtopic in topic.subtopics" data-ng-show="expandSub">
+                    <a data-ng-href="#activitiesList"><button data-ng-disabled = "hasActivities(subtopic)" data-ng-click="showProgress(subtopic)">
+                        <span class=subtopicMenuItem">{{subtopic.name}}</span>
+                    </button></a>
+                </ul>
+            </ul>
+        </ul>
+    </div>
+    <a id="activitiesList"></a>
+    <div id="progress" ng-show="showActivities()">
+        <p>Activities progress list:</p>
+        <ul data-ng-repeat='activity in activities'>
+           <a data-ng-href="#activityResource"><button data-ng-click="setCurrentActivity(activity)" data-ng-href="#activityResource">
+                <span class='progressItem'>{{activity.activityName}} -- {{activity.finalResult}} / {{activity.maxResult}}</span>
+           </button></a>
+        </ul>
+    </div>
+    <a id="activityResource"></a>
+    <div width="90%" data-ng-show="activitySelected">
+        <p>Study this resource, then type some notes in the text below it.</p>
+        <div id="activityContent">
+
+        </div>
+        <p>Type your notes here, then get feedback</p>
+        <form data-ng-submit = "submitActivity(answer)">
+            <input type="text" data-ng-model="answer" />
+            <input type="submit" value="Get feedback" />
+            <div id="feedbackArea"></div>
+        </form>
+    </div>
+</div>
+
+
+<!-- scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
+<script src="js/Revision.js"></script>
+</body>
+</html>
